@@ -66,6 +66,10 @@ def prep_iris_data(df):
 
 #Prepare Telco Data:
 def clean_telco_data(df):
+    '''
+    Cleans the Telco data by converting senior_citizen to string values, casting total_charges to float values, dropping foreign key columns,
+    and creating dummy values for categorical columns that can ultimately be used for modeling.
+    '''
     #Replacing empty cells with nulls:
     df = df.replace(' ', np.nan)
     #Replacing ints with yes or no:
@@ -84,8 +88,31 @@ def clean_telco_data(df):
     return df
 
 def prep_telco_data(df):
+    '''
+    Prepares the cleaned Telco data by splitting it into train, validate, and test sets to be used for exploration. Returns train, validate, test.
+    '''
     df = clean_telco_data(df)
     train, test = train_test_split(df, train_size = 0.8, stratify = df.churn, random_state = 1234)
     train, validate = train_test_split(train, train_size = 0.8, stratify = train.churn, random_state = 1234)
     return train, validate, test
+
+def telco_sample_splitter(train, validate, test):
+    '''
+    Splits train, validate, and test subsets into x and y sets for modeling and validation. Returns X_train, y_train, X_validate, y_validate, X_test, y_test.
+    '''
+    #Creating Train Set:
+    X_train = train.drop(columns = ['customer_id', 'gender', 'senior_citizen', 'partner', 'dependents', 'phone_service', 'multiple_lines', 'online_security', 'online_backup', 'device_protection',
+    'tech_support', 'streaming_tv', 'streaming_movies', 'paperless_billing', 'monthly_charges', 'total_charges', 'churn', 'contract_type', 'payment_type', 'internet_service_type'])
+    y_train = train.churn
+
+    #Creating Validate Set:
+    X_validate = validate.drop(columns = ['customer_id', 'gender', 'senior_citizen', 'partner', 'dependents', 'phone_service', 'multiple_lines', 'online_security', 'online_backup', 'device_protection',
+    'tech_support', 'streaming_tv', 'streaming_movies', 'paperless_billing', 'monthly_charges', 'total_charges', 'churn', 'contract_type', 'payment_type', 'internet_service_type'])
+    y_validate = validate.churn
+
+    #Creating Test Set:
+    X_test = test.drop(columns = ['customer_id', 'gender', 'senior_citizen', 'partner', 'dependents', 'phone_service', 'multiple_lines', 'online_security', 'online_backup', 'device_protection',
+    'tech_support', 'streaming_tv', 'streaming_movies', 'paperless_billing', 'monthly_charges', 'total_charges', 'churn', 'contract_type', 'payment_type', 'internet_service_type'])
+    y_test = test.churn
+    return X_train, y_train, X_validate, y_validate, X_test, y_test
 
