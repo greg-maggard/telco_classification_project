@@ -39,7 +39,7 @@ This project provides exposure to the entire data science pipeline. This include
 - I expect customers with multiple lines on their account to churn at significantly higher rates. 
 - I expect customers with fiber optic internet to churn at significantly higher rates. 
 
-##Further Questions:
+## Further Questions:
 - What further analysis can be done to establish clear causal relationships between some of these features and churn?
 - Coudl we acquire data on customer satisfaction, in order to understand directly the pain points that lead a customer to churn?
 
