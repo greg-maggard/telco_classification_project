@@ -52,6 +52,7 @@ def optimal_rf_finder(X_train, y_train, X_validate, y_validate, max_depth = 20):
     df = pd.DataFrame(metrics)
     #Adding a 'difference' column that contains values for the difference between the model's accuracy on the train and validate sets:
     df["difference"] = df.train_accuracy - df.validate_accuracy
+    return df
 
 def rf_performance_grapher(df):
     '''
